@@ -136,7 +136,7 @@ export \
     TESTING_KERNEL=$TESTING_KERNEL \
 
 # kernel version
-[ "$TESTING_KERNEL" = "y" ] && export kernel_version=6.11 || export kernel_version=6.6
+[ "$TESTING_KERNEL" = "y" ] && export kernel_version=6.12 || export kernel_version=6.6
 
 # print version
 echo -e "\r\n${GREEN_COLOR}Building $branch${RES}\r\n"
@@ -277,20 +277,16 @@ rm -rf ../master
 # Load devices Config
 if [ "$platform" = "x86_64" ]; then
     curl -s https://$mirror/openwrt/23-config-musl-x86 > .config
-    ALL_KMODS=y
 elif [ "$platform" = "bcm53xx" ]; then
     if [ "$MINIMAL_BUILD" = "y" ]; then
         curl -s https://$mirror/openwrt/23-config-musl-r8500-minimal > .config
     else
         curl -s https://$mirror/openwrt/23-config-musl-r8500 > .config
     fi
-    ALL_KMODS=y
 elif [ "$platform" = "rk3568" ]; then
     curl -s https://$mirror/openwrt/23-config-musl-r5s > .config
-    ALL_KMODS=y
 elif [ "$platform" = "armv8" ]; then
     curl -s https://$mirror/openwrt/23-config-musl-armsr-armv8 > .config
-    ALL_KMODS=y
 else
     curl -s https://$mirror/openwrt/23-config-musl-r4s > .config
 fi
@@ -303,6 +299,9 @@ else
     [ "$platform" != "bcm53xx" ] && curl -s https://$mirror/openwrt/23-config-common >> .config
     [ "$platform" = "armv8" ] && sed -i '/DOCKER/Id' .config
 fi
+
+# config-firmware
+[ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ] && curl -s https://$mirror/openwrt/generic/config-firmware >> .config
 
 # ota
 [ "$ENABLE_OTA" = "y" ] && [ "$version" = "rc2" ] && echo 'CONFIG_PACKAGE_luci-app-ota=y' >> .config
@@ -416,12 +415,18 @@ fi
 if [ "$BUILD_TOOLCHAIN" = "y" ]; then
     echo -e "\r\n${GREEN_COLOR}Building Toolchain ...${RES}\r\n"
     make -j$cores toolchain/compile || make -j$cores toolchain/compile V=s || exit 1
+    make tools/clang/clean
+    rm -f dl/clang-*
     mkdir -p toolchain-cache
     [ "$ENABLE_GLIBC" = "y" ] && LIBC=glibc || LIBC=musl
     tar -I "zstd -19 -T$(nproc --all)" -cf toolchain-cache/toolchain_"$LIBC"_"$toolchain_arch"_gcc-"$gcc_version".tar.zst ./{build_dir,dl,staging_dir,tmp}
-    echo -e "${GREEN_COLOR} Build success! ${RES}"
+    echo -e "\n${GREEN_COLOR} Build success! ${RES}"
     exit 0
 else
+    if [ "$BUILD_FAST" = "y" ]; then
+        echo -e "\r\n${GREEN_COLOR}Building tools/clang ...${RES}\r\n"
+        make tools/clang/compile -j$cores
+    fi
     echo -e "\r\n${GREEN_COLOR}Building OpenWrt ...${RES}\r\n"
     sed -i "/BUILD_DATE/d" package/base-files/files/usr/lib/os-release
     sed -i "/BUILD_ID/aBUILD_DATE=\"$CURRENT_DATE\"" package/base-files/files/usr/lib/os-release
@@ -447,7 +452,7 @@ fi
 [ "$TESTING_KERNEL" = "y" ] && OTA_PREFIX="test-" || OTA_PREFIX=""
 
 if [ "$platform" = "x86_64" ]; then
-    if [ "$ALL_KMODS" = y ]; then
+    if [ "$NO_KMOD" != "y" ]; then
         cp -a bin/targets/x86/*/packages $kmodpkg_name
         rm -f $kmodpkg_name/Packages*
         # driver firmware
@@ -486,7 +491,7 @@ EOF
     fi
     exit 0
 elif [ "$platform" = "armv8" ]; then
-    if [ "$ALL_KMODS" = y ]; then
+    if [ "$NO_KMOD" != "y" ]; then
         cp -a bin/targets/armsr/armv8*/packages $kmodpkg_name
         rm -f $kmodpkg_name/Packages*
         # driver firmware
@@ -515,7 +520,7 @@ EOF
     fi
     exit 0
 elif [ "$platform" = "bcm53xx" ]; then
-    if [ "$ALL_KMODS" = y ]; then
+    if [ "$NO_KMOD" != "y" ]; then
         cp -a bin/targets/bcm53xx/generic/packages $kmodpkg_name
         rm -f $kmodpkg_name/Packages*
         # driver firmware
@@ -549,7 +554,7 @@ EOF
     fi
     exit 0
 else
-    if [ "$ALL_KMODS" = y ]; then
+    if [ "$NO_KMOD" != "y" ] && [ "$platform" != "rk3399" ]; then
         cp -a bin/targets/rockchip/armv8*/packages $kmodpkg_name
         rm -f $kmodpkg_name/Packages*
         # driver firmware
