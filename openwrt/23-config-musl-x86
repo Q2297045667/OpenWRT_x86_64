@@ -61,12 +61,12 @@ CONFIG_PACKAGE_kmod-fb=y
 
 ### Utilities
 CONFIG_PACKAGE_qemu-ga=y
-CONFIG_PACKAGE_open-vm-tools=y
 
 ### Virtualization
 CONFIG_PACKAGE_kmod-kvm-amd=y
 CONFIG_PACKAGE_kmod-kvm-intel=y
 CONFIG_PACKAGE_kmod-kvm-x86=y
+CONFIG_PACKAGE_open-vm-tools=y
 
 
 ### RTL8723D / RTL8821C / RTW89 firmware
