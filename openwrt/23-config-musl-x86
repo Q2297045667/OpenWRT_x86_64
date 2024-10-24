@@ -41,7 +41,6 @@ CONFIG_PACKAGE_kmod-nvme=y
 ### Display & Extra Drivers
 # CONFIG_PACKAGE_kmod-backlight-pwm=y
 # CONFIG_PACKAGE_kmod-backlight=y
-# CONFIG_PACKAGE_kmod-drm-amdgpu=y
 # CONFIG_PACKAGE_kmod-drm-i915=y
 # CONFIG_PACKAGE_kmod-drm-kms-helper=y
 # CONFIG_PACKAGE_kmod-drm-radeon=y
@@ -61,21 +60,9 @@ CONFIG_PACKAGE_kmod-fb=y
 
 ### Utilities
 CONFIG_PACKAGE_qemu-ga=y
+# CONFIG_PACKAGE_open-vm-tools=y
 
 ### Virtualization
 CONFIG_PACKAGE_kmod-kvm-amd=y
 CONFIG_PACKAGE_kmod-kvm-intel=y
 CONFIG_PACKAGE_kmod-kvm-x86=y
-CONFIG_PACKAGE_open-vm-tools=y
-
-
-### RTL8723D / RTL8821C / RTW89 firmware
-CONFIG_PACKAGE_rtl8723de-firmware=m
-CONFIG_PACKAGE_rtl8821ce-firmware=m
-CONFIG_PACKAGE_rtl8851be-firmware=m
-CONFIG_PACKAGE_rtl8852ae-firmware=m
-CONFIG_PACKAGE_rtl8852be-firmware=m
-CONFIG_PACKAGE_rtl8852ce-firmware=m
-
-### MT76 firmware
-CONFIG_PACKAGE_mt7925-firmware=m
