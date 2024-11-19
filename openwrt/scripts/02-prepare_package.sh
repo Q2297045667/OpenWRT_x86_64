@@ -11,7 +11,7 @@ git clone https://$github/sbwml/feeds_packages_lang_node-prebuilt feeds/packages
 # default settings
 git clone https://$github/sbwml/default-settings package/new/default-settings -b openwrt-24.10
 
-# luci-app-
+# luci-app-natmapt
 git clone https://$github/muink/luci-app-natmapt package/luci-app-natmaptp
 
 # natmapt
