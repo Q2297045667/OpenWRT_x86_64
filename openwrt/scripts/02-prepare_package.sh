@@ -14,6 +14,12 @@ git clone https://$github/sbwml/default-settings package/new/default-settings -b
 # luci-app-filemanager
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
 
+# luci-app-natmapt
+git clone https://$github/muink/luci-app-natmapt package/new/luci-app-natmapt
+
+# natmapt
+git clone https://$github/muink/openwrt-natmapt package/new/natmapt
+
 # luci-app-webdav
 git clone https://$github/sbwml/luci-app-webdav package/new/luci-app-webdav
 
