@@ -1,3 +1,10 @@
+# 分流专用OpenWRT
+## 基于 上游构建
+###改动如下
+移出多余软件包，添加需要的软件包
+加入英特尔，Realtek常见网卡驱动
+
+
 # NanoPi R4S/R5S/R5C & X86_64 OpenWrt 简易构建脚本存档
 
 ### 存档来自：https://init2.cooluc.com
