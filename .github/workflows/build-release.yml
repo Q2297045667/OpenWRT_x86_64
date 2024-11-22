@@ -161,7 +161,7 @@ jobs:
           mkdir -p ccache
           tar cf - .ccache | split -d -b 1800m - ccache/${{ github.event.inputs.device }}.tar.
 
-      - name: 上传缓存（发布版本 - ccache）
+      - name: 上传缓存（发布版本 - 缓存）
         if: ${{ github.event.inputs.ccache == 'true' && github.event.inputs.device == 'armv8' || github.event.inputs.device == 'nanopi-r4s' }}
         continue-on-error: true
         uses: ncipollo/release-action@v1.14.0
