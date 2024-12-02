@@ -18,10 +18,10 @@ git clone https://github.com/sbwml/wwan-packages package/new/wwan
 git clone https://$github/sbwml/luci-app-filemanager package/new/luci-app-filemanager
 
 # luci-app-natmapt
-# git clone https://$github/muink/luci-app-natmapt package/new/luci-app-natmapt
+git clone https://$github/muink/luci-app-natmapt package/new/luci-app-natmapt
 
 # natmapt
-git clone https://$github/muink/openwrt-natmapt package/new/natmapt
+# git clone https://$github/muink/openwrt-natmapt package/new/natmapt
 
 # luci-app-webdav
 git clone https://$github/sbwml/luci-app-webdav package/new/luci-app-webdav
