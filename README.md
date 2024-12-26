@@ -8,6 +8,8 @@
 
 加入英特尔，Realtek常见网卡驱动
 
+加入虚拟化软件包，如openvmtool
+
 
 # NanoPi R4S/R5S/R5C & X86_64 OpenWrt 简易构建脚本存档
 
