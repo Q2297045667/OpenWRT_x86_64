@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
-# golang 1.23
+# golang 1.24
 rm -rf feeds/packages/lang/golang
-git clone https://$github/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
+git clone https://$github/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
 
 # node - prebuilt
 rm -rf feeds/packages/lang/node
@@ -167,3 +167,7 @@ git clone https://$github/sbwml/package_kernel_tcp-brutal package/kernel/tcp-bru
 
 # watchcat - clean config
 true > feeds/packages/utils/watchcat/files/watchcat.config
+
+# libpcap
+rm -rf package/libs/libpcap
+git clone https://$github/sbwml/package_libs_libpcap package/libs/libpcap
